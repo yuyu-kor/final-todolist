@@ -2,14 +2,17 @@ import { useState } from "react";
 import "./App.css";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
+import FilterBar from "./components/FilterBar";
 
 function App() {
+  const [filter, setFilter] = useState("전체");
   const [todoList, setTodoList] = useState([]);
 
   const handleAddTodo = (text) => {
     const newTodo = {
       id: Date.now(),
       text,
+      isDone: false,
     };
     setTodoList([...todoList, newTodo]);
   };
@@ -18,12 +21,32 @@ function App() {
     setTodoList(todoList.filter((todo) => todo.id !== idToDelete));
   };
 
+  const handleToggleTodo = (id) => {
+    setTodoList((prev) =>
+      prev.map((todo) =>
+        todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
+      )
+    );
+  };
+
+  const filteredList = todoList.filter((todo) => {
+    if (filter === "전체") return true;
+    if (filter === "완료") return todo.isDone === true;
+    if (filter === "미완료") return todo.isDone === false;
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-white flex items-center justify-center px-4">
       <div className="w-full max-w-md p-6 bg-white border border-indigo-200 rounded-2xl shadow-md">
         <h2 className="mb-6 text-2xl text-indigo-600">✔️ 할 일 목록</h2>
         <TodoInput onAddTodo={handleAddTodo} />
-        <TodoList todoList={todoList} onDelete={handleDeleteTodo} />
+        <FilterBar currentFilter={filter} onChangeFilter={setFilter} />
+        <TodoList
+          todoList={filteredList}
+          onDelete={handleDeleteTodo}
+          onToggleTodo={handleToggleTodo}
+          currentFilter={filter}
+        />
       </div>
     </div>
   );
