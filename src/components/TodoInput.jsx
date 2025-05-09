@@ -2,15 +2,23 @@ import React, { useState } from "react";
 
 const TodoInput = ({ onAddTodo }) => {
   const [inputValue, setInputValue] = useState("");
+  const [isWarning, setIsWarning] = useState(false);
 
   const handleAddTodo = () => {
     //공백만 입력했을 때도 입력창 초기화
     const trimmed = inputValue.trim();
     if (trimmed === "") {
+      setIsWarning(true);
       setInputValue("");
+
+      setTimeout(() => {
+        setIsWarning(false);
+      }, 2000);
+
       return;
     }
     onAddTodo(inputValue);
+
     setInputValue("");
   };
 
@@ -21,7 +29,7 @@ const TodoInput = ({ onAddTodo }) => {
   };
 
   return (
-    <div className="flex items-center gap-3 mb-6">
+    <div className="flex items-center gap-3 mb-6 relative">
       <input
         type="text"
         placeholder="할 일을 입력해 주세요"
@@ -36,6 +44,15 @@ const TodoInput = ({ onAddTodo }) => {
       >
         추가
       </button>
+
+      {isWarning && (
+        <div
+          role="alert"
+          className="alert alert-warning alert-soft fixed top-4 left-1/2 -translate-x-1/2 z-50 shadow-md shake"
+        >
+          <span>할 일을 입력해 주세요!</span>
+        </div>
+      )}
     </div>
   );
 };
