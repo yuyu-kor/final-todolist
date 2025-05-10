@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+export const WARNING_DURATION = 2000;
+
 const TodoInput = ({ onAddTodo }) => {
   const [inputValue, setInputValue] = useState("");
   const [isWarning, setIsWarning] = useState(false);
@@ -13,7 +15,7 @@ const TodoInput = ({ onAddTodo }) => {
 
       setTimeout(() => {
         setIsWarning(false);
-      }, 2000);
+      }, WARNING_DURATION);
 
       return;
     }
