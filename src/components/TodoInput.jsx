@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-
-export const WARNING_DURATION = 2000;
+import { WARNING_DURATION } from "../constants/warningDuration";
 
 const TodoInput = ({ onAddTodo }) => {
   const [inputValue, setInputValue] = useState("");

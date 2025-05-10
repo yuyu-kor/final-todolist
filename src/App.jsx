@@ -3,6 +3,7 @@ import "./App.css";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 import FilterBar from "./components/FilterBar";
+import { FILTER_TYPES } from "./constants/filterTypes";
 
 function App() {
   const [filter, setFilter] = useState("전체");
@@ -31,9 +32,9 @@ function App() {
   };
 
   const filteredList = todoList.filter((todo) => {
-    if (filter === "전체") return true;
-    if (filter === "완료") return todo.isDone === true;
-    if (filter === "미완료") return todo.isDone === false;
+    if (filter === FILTER_TYPES.all) return true;
+    if (filter === FILTER_TYPES.completed) return todo.isDone === true;
+    if (filter === FILTER_TYPES.incompleted) return todo.isDone === false;
   });
 
   //로컬스토리지 불러오기
