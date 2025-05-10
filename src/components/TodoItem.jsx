@@ -12,6 +12,7 @@ const TodoItem = ({ item, onDelete, onToggleTodo }) => {
         {item.text}
       </span>
       <div className="flex gap-3">
+        <p className="text-indigo-400">{new Date().toLocaleDateString()}</p>
         <input
           type="checkbox"
           className="checkbox checkbox-primary checkbox-sm"
